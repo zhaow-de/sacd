@@ -20,6 +20,7 @@ containes only the necessary logics.
 
 ## Usage
 
+```
 sacd2wav -i infile [-o outdir] [options]
 
   -i, --infile         : Specify the input file (*.iso, *.dsf, *.dff)  
@@ -28,8 +29,9 @@ sacd2wav -i infile [-o outdir] [options]
                          directory  
   -r, --rate           : The output sample rate.
                          Valid rates are: 96000 or 192000.
-                         If you omit this, 96KHz will be used.  
+                         If you omit this, 192kHz will be used.  
   -h, --help           : Show this help message  
+```
 
 ## Development
 
