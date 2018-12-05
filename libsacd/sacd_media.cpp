@@ -19,30 +19,25 @@
 */
 
 #include <unistd.h>
-#include <sys/stat.h>
 #include "scarletbook.h"
 #include "sacd_media.h"
 
-#define MIN(a,b) (((a)<(b))?(a):(b))
+#define MIN(a, b) (((a)<(b))?(a):(b))
 
 sacd_media_t::sacd_media_t()
-{
-}
+= default;
 
 sacd_media_t::~sacd_media_t()
-{
-}
+= default;
 
-bool sacd_media_t::open(const char* path)
+bool sacd_media_t::open(const char *path)
 {
-    try
-    {
+    try {
         media_file = fopen(path, "r");
         m_strFilePath = path;
         return true;
     }
-    catch (...)
-    {
+    catch (...) {
     }
 
     return false;
@@ -61,12 +56,17 @@ bool sacd_media_t::seek(int64_t position, int mode)
     return true;
 }
 
+bool sacd_media_t::seek(int64_t position)
+{
+    return seek(position, SEEK_SET);
+}
+
 int64_t sacd_media_t::get_position()
 {
     return ftell(media_file);
 }
 
-size_t sacd_media_t::read(void* data, size_t size)
+size_t sacd_media_t::read(void *data, size_t size)
 {
     return fread(data, 1, size, media_file);
 }
@@ -78,6 +78,6 @@ int64_t sacd_media_t::skip(int64_t bytes)
 
 string sacd_media_t::getFileName()
 {
-    m_strFilePath = m_strFilePath.substr(m_strFilePath.find_last_of("/") + 1, string::npos);
-    return m_strFilePath.substr(0, m_strFilePath.find_last_of(".")) + ".wav";
+    m_strFilePath = m_strFilePath.substr(m_strFilePath.find_last_of('/') + 1, string::npos);
+    return m_strFilePath.substr(0, m_strFilePath.find_last_of('.')) + ".wav";
 }

@@ -20,38 +20,26 @@
     along with SACD.  If not, see <http://www.gnu.org/licenses/gpl-3.0.txt>.
 */
 
-#ifndef _SCARLETBOOK_H_INCLUDED
-#define _SCARLETBOOK_H_INCLUDED
+#ifndef __SCARLETBOOK_H__
+#define __SCARLETBOOK_H__
 
-#include <stdint.h>
+#include <cstdint>
 #include <string>
 
 using namespace std;
 
 #define SACD_LSN_SIZE 2048
 #define SACD_SAMPLING_FREQUENCY 2822400
-#define START_OF_FILE_SYSTEM_AREA 0
 #define START_OF_MASTER_TOC 510
 #define MASTER_TOC_LEN 10
-#define MAX_AREA_TOC_SIZE_LSN 96
 #define MAX_LANGUAGE_COUNT 8
-#define MAX_CHANNEL_COUNT 6
-#define SAMPLES_PER_FRAME 588
-#define FRAME_SIZE_64 (SAMPLES_PER_FRAME * 64 / 8)
 #define SUPPORTED_VERSION_MAJOR 1
 #define SUPPORTED_VERSION_MINOR 20
-#define MAX_GENRE_COUNT 29
-#define MAX_CATEGORY_COUNT 3
-
-enum frame_format_t
-{
-    FRAME_FORMAT_DST = 0,
-    FRAME_FORMAT_DSD_3_IN_14 = 2,
-    FRAME_FORMAT_DSD_3_IN_16 = 3
-};
 
 enum character_set_t
 {
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
     CHAR_SET_UNKNOWN = 0,
     CHAR_SET_ISO646 = 1, // ISO 646 (IRV), no escape sequences allowed
     CHAR_SET_ISO8859_1 = 2, // ISO 8859-1, no escape sequences allowed
@@ -60,15 +48,16 @@ enum character_set_t
     CHAR_SET_GB2312 = 5, // Chinese GB 2312-80
     CHAR_SET_BIG5 = 6, // Big5
     CHAR_SET_ISO8859_1_ESC = 7 // ISO 8859-1, single byte set escape sequences allowed
+#pragma clang diagnostic pop
 };
 
 // string representation for character sets
-extern const char* character_set[];
-
-extern const char* album_genre[];
+extern const char *character_set[];
 
 enum genre_t
 {
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
     GENRE_NOT_USED = 0, // 12
     GENRE_NOT_DEFINED = 1, // 12
     GENRE_ADULT_CONTEMPORARY = 2, // 12
@@ -99,16 +88,18 @@ enum genre_t
     GENRE_SPOKEN_WORD = 27, // 101
     GENRE_WORLD_MUSIC = 28, // 12
     GENRE_BLUES = 29 // 0
+#pragma clang diagnostic pop
 };
 
 enum category_t
 {
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
     CATEGORY_NOT_USED = 0,
     CATEGORY_GENERAL = 1,
     CATEGORY_JAPANESE = 2
+#pragma clang diagnostic pop
 };
-
-extern const char* album_category[];
 
 enum track_type_t
 {
@@ -138,15 +129,14 @@ typedef struct
     uint8_t category;  // category_t
     uint16_t reserved;
     uint8_t genre; // genre_t
-}
-genre_table_t;
+} genre_table_t;
 
 //Language & character set
 typedef struct
 {
-  char language_code[2]; // ISO639-2 Language code
-  uint8_t character_set; // char_set_t, 1 (ISO 646)
-  uint8_t reserved;
+    char language_code[2]; // ISO639-2 Language code
+    character_set_t character_set; // 1 (ISO 646)
+    uint8_t reserved;
 } locale_table_t;
 
 // Master TOC
@@ -209,7 +199,7 @@ typedef struct
     uint16_t disc_artist_phonetic_position;
     uint16_t disc_publisher_phonetic_position;
     uint16_t disc_copyright_phonetic_position;
-    uint8_t  data[2000];
+    uint8_t data[2000];
 } master_sacd_text_t;
 
 typedef struct
@@ -337,17 +327,6 @@ typedef struct
 
 typedef struct
 {
-    char id[8]; // SACD_ACC, Access List
-    uint16_t entry_count;
-    uint8_t main_step_size;
-    uint8_t reserved01[5];
-    uint8_t main_access_list[6550][5];
-    uint8_t reserved02[2];
-    uint8_t detailed_access_list[32768];
-} area_access_list_t;
-
-typedef struct
-{
     char id[8]; // SACDTRL1
     uint32_t track_start_lsn[255];
     uint32_t track_length_lsn[255];
@@ -439,13 +418,13 @@ typedef struct
 
 typedef struct
 {
-    uint8_t* area_data;
-    area_toc_t* area_toc;
-    area_tracklist_offset_t* area_tracklist_offset;
-    area_tracklist_time_t* area_tracklist_time;
-    area_text_t* area_text;
+    uint8_t *area_data;
+    area_toc_t *area_toc;
+    area_tracklist_offset_t *area_tracklist_offset;
+    area_tracklist_time_t *area_tracklist_time;
+    area_text_t *area_text;
     area_track_text_t area_track_text[255]; // max of 255 supported tracks
-    area_isrc_genre_t* area_isrc_genre;
+    area_isrc_genre_t *area_isrc_genre;
     string description;
     string copyright;
     string description_phonetic;
@@ -454,16 +433,17 @@ typedef struct
 
 typedef struct
 {
-    void* sacd; // sacd_reader_t
-    uint8_t* master_data;
-    master_toc_t* master_toc;
-    master_man_t* master_man;
+    void *sacd{}; // sacd_reader_t
+    uint8_t *master_data{};
+    master_toc_t *master_toc{};
+    master_man_t *master_man{};
     master_text_t master_text;
-    int twoch_area_idx;
-    int mulch_area_idx;
-    int area_count;
+    int twoch_area_idx{};
+    int mulch_area_idx{};
+    int area_count{};
     scarletbook_area_t area[2];
 } scarletbook_handle_t;
 
 #pragma pack()
-#endif
+
+#endif  // __SCARLETBOOK_H__

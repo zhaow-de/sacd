@@ -18,30 +18,54 @@
     along with SACD.  If not, see <http://www.gnu.org/licenses/gpl-3.0.txt>.
 */
 
-#ifndef _SACD_MEDIA_H_INCLUDED
-#define _SACD_MEDIA_H_INCLUDED
+#ifndef __SACD_MEDIA_H__
+#define __SACD_MEDIA_H__
 
-#include <stdint.h>
+#include <cstdint>
 #include <cstring>
 #include <string>
-#include <stdio.h>
+#include <cstdio>
+
+#ifndef MARK_TIME
+#define MARK_TIME(m) ((double)(m).hours * 60 * 60 + (double)(m).minutes * 60 + (double)(m).seconds + ((double)(m).samples + (double)(m).offset) / (double)m_samplerate)
+#endif  // MARK_TIME
+
+#ifndef MIN
+#define MIN(a, b) (((a)<(b))?(a):(b))
+#endif  // MIN
+
+#ifndef MAX
+#define MAX(a, b) (((a)>(b))?(a):(b))
+#endif  // MAX
 
 using namespace std;
 
 class sacd_media_t
 {
-    FILE * media_file;
-    string m_strFilePath;
 public:
     sacd_media_t();
+
     virtual ~sacd_media_t();
-    virtual bool open(const char* path);
+
+    virtual bool open(const char *path);
+
     virtual bool close();
-    virtual bool seek(int64_t position, int mode = SEEK_SET);
+
+    virtual bool seek(int64_t position, int mode);
+
+    bool seek(int64_t position);
+
     virtual int64_t get_position();
-    virtual size_t read(void* data, size_t size);
+
+    virtual size_t read(void *data, size_t size);
+
     virtual int64_t skip(int64_t bytes);
+
     virtual string getFileName();
+
+private:
+    FILE *media_file;
+    string m_strFilePath;
 };
 
-#endif
+#endif  // __SACD_MEDIA_H__
