@@ -2,7 +2,7 @@ CXX = g++
 
 VPATH = libdstdec:libdsd2pcm:libsacd
 
-CXXFLAGS = -std=c++17 -Wall -Ilibdstdec -Ilibdsd2pcm -Ilibsacd -Ofast -msse3 -flto -Wno-unknown-pragmas
+CXXFLAGS = -std=c++17 -Wall -Wno-unknown-pragmas -Ilibdstdec -Ilibdsd2pcm -Ilibsacd -Ofast -msse3 -flto
 
 LDFLAGS = -Llibdstdec -Llibdsd2pcm -Llibsacd -liconv -lpthread
 
@@ -67,4 +67,3 @@ clean:
 
 install: sacd2wav
 	install ./sacd2wav /usr/local/bin
-

@@ -47,4 +47,7 @@ add_executable(sacd2wav
         main.cpp
         )
 
-target_link_libraries(sacd2wav iconv)
+target_compile_options (sacd2wav PRIVATE -Wall -Wno-unknown-pragmas -Ofast -msse3 -flto)
+
+
+target_link_libraries(sacd2wav iconv pthread)
