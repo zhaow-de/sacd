@@ -146,7 +146,7 @@ int main(int argc, char *argv[])
     const char strHelpText[] =
             "sacd2wav - a utility to convert SACD (Super Audio CD) file to HiRes wave\n"
             "           files ready for TASCAM DR-100 Mark 2/3\n"
-            "           (version " APPVERSION ")\n"
+            "           (version " APPVERSION ", licensed under GPL3. zhaow.km@gmail.com)\n"
             "usage: sacd2wav -i infile [-o outdir] [options]\n"
             "  -i, --infile         : Specify the input file (*.iso, *.dsf, *.dff)\n"
             "  -o, --outdir         : The folder to write the WAVE files to. If you omit\n"
