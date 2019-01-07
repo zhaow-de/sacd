@@ -2,7 +2,7 @@
 
 Origin: https://github.com/DocMarty84/sacd by Robert Tari <robert.tari@gmail.com> under GPL. 
 
-Zhao Wang <zhaow.km@gmail.com> ported to macOS and adapted for Tascam DR-100.
+Here is the porting for macOS and adaptation for Tascam DR-100.
 
 ## Description
 
